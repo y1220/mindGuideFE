@@ -1,5 +1,6 @@
 .chat-container {
     text-align: center;
+    font-family: 'Comic Sans MS', cursive, sans-serif;
 }
 
 .start-chat-button {
@@ -8,4 +9,5 @@
     padding: 10px 20px;
     font-size: 18px;
     text-decoration: none;
+    color: white;
 }
