@@ -1,8 +1,11 @@
 class ChatController < ApplicationController
   def home
-    @chat_prompt = "Click the button below to start chatting!"
-    if params[:chat_prompt].present?
-      @chat_prompt = params[:chat_prompt]
+    @chat_response = "Click the button below to start chatting!"
+    if params[:chat_response].present?
+      @chat_response = params[:chat_response]
+    end
+    if params[:voice_input].present?
+      @voice = params[:voice_input]
     end
   end
 
@@ -14,7 +17,7 @@ class ChatController < ApplicationController
       return
     end
 
-    file_path = Rails.root.join('app', 'assets', 'config', 'emoji_description.json')
+    file_path = Rails.root.join('app', 'assets', 'config', 'animated_emoji_description.json')
     unless File.exist?(file_path)
       render json: { error: 'Configuration file not found' }, status: :internal_server_error
       return
@@ -25,7 +28,7 @@ class ChatController < ApplicationController
     description = emoji_descriptions[emotion]['description']
 
     if description
-      redirect_to action: 'home', chat_prompt: voice.present? ? "#{description} (Voice: #{voice})" : description
+      redirect_to action: 'home', chat_response: description, voice_input: voice
     else
       render json: { error: 'Emotion label not found' }, status: :not_found
     end
