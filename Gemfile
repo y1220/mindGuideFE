@@ -71,4 +71,10 @@ group :test do
   gem "webdrivers"
 end
 
-gem 'byebug', group: [:development, :test]
+group :development, :test do
+  gem "byebug"
+  gem 'dotenv-rails'
+end
+
+gem "httparty"
+gem 'net-protocol', '0.1.2'

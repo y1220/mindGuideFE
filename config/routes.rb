@@ -3,4 +3,5 @@ Rails.application.routes.draw do
   root "chat#home"
   get 'chat/home', to: 'chat#home'
   get 'chat/chat', to: 'chat#chat'
+  post 'generate_content', to: 'content#generate'
 end

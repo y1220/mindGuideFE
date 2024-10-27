@@ -6,12 +6,15 @@
     <% emotion = emoji.keys.sample %>
     <div id="emoji-animation" value="<%= emoji[emotion] %>" style="width: 200px; height: 200px; margin: 0 auto;"></div>
     <div style="height: 50px;"></div>
-    <div class="chat-message-right">
-        <p><%= @voice %></p>
-    </div>
-    <div class="chat-message-left">
-        <p><%= @chat_response %></p>
-    </div>
+    <% if @voice.present? %>
+        <div class="chat-message-right">
+            <p><%= @voice %></p>
+        </div>
+
+        <div class="chat-message-left">
+            <p><%= @chat_response %></p>
+        </div>
+    <% end %>
     <div style="height: 20px;"></div>
     <%= form_with url: chat_chat_url, method: :get, local: true do %>
         <%= hidden_field_tag :emotion, emotion %>
