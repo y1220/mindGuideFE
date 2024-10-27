@@ -6,7 +6,10 @@
     <% emotion = emoji.keys.sample %>
     <%= image_tag "emoji/#{emoji[emotion]}", alt: "#{emotion.capitalize} Emoji", class: 'emoji-image' %>
     <div style="height: 50px;"></div>
-    <p>Click the button below to start chatting!</p>
+    <p><%= @chat_prompt %></p>
     <div style="height: 20px;"></div>
-    <%= link_to 'Start Chatting', chat_home_path, class: 'btn btn-primary start-chat-button' %>
+    <%= form_with url: chat_chat_url, method: :get, local: true do %>
+        <%= hidden_field_tag :emotion, emotion %>
+        <%= submit_tag 'Start Chatting', class: 'btn btn-primary start-chat-button' %>
+    <% end %>
 </div>
