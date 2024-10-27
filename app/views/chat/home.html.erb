@@ -1,0 +1,12 @@
+<div class="chat-container">
+    <h1>Talk to me!</h1>
+    <p>Let's talk together, I am here to accompany your team discussion :)</p>
+    <div style="height: 50px;"></div>
+    <% emoji = JSON.parse(File.read(Rails.root.join('app', 'assets', 'config', 'emoji.json'))) %>
+    <% emotion = emoji.keys.sample %>
+    <%= image_tag "emoji/#{emoji[emotion]}", alt: "#{emotion.capitalize} Emoji", class: 'emoji-image' %>
+    <div style="height: 50px;"></div>
+    <p>Click the button below to start chatting!</p>
+    <div style="height: 20px;"></div>
+    <%= link_to 'Start Chatting', chat_home_path, class: 'btn btn-primary start-chat-button' %>
+</div>

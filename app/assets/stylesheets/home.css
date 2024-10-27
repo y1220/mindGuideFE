@@ -1,0 +1,11 @@
+.chat-container {
+    text-align: center;
+}
+
+.start-chat-button {
+    background-color: pink;
+    border-radius: 12px;
+    padding: 10px 20px;
+    font-size: 18px;
+    text-decoration: none;
+}
