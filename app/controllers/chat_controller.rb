@@ -8,6 +8,7 @@ class ChatController < ApplicationController
 
   def chat
     emotion = params[:emotion]
+    voice = params[:voice_input]
     unless emotion.present?
       render json: { error: 'Emotion label is required' }, status: :bad_request
       return
@@ -24,7 +25,7 @@ class ChatController < ApplicationController
     description = emoji_descriptions[emotion]['description']
 
     if description
-      redirect_to action: 'home', chat_prompt: description
+      redirect_to action: 'home', chat_prompt: voice.present? ? "#{description} (Voice: #{voice})" : description
     else
       render json: { error: 'Emotion label not found' }, status: :not_found
     end

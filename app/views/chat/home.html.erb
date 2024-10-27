@@ -11,5 +11,34 @@
     <%= form_with url: chat_chat_url, method: :get, local: true do %>
         <%= hidden_field_tag :emotion, emotion %>
         <%= submit_tag 'Start Chatting', class: 'btn btn-primary start-chat-button' %>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const startChatButton = document.querySelector('.start-chat-button');
+                startChatButton.addEventListener('click', function(event) {
+                    event.preventDefault();
+                    const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+                    recognition.lang = 'en-US';
+                    recognition.interimResults = false;
+                    recognition.maxAlternatives = 1;
+
+                    recognition.onresult = function(event) {
+                        const voiceInput = event.results[0][0].transcript;
+                        const form = startChatButton.closest('form');
+                        const voiceInputField = document.createElement('input');
+                        voiceInputField.setAttribute('type', 'hidden');
+                        voiceInputField.setAttribute('name', 'voice_input');
+                        voiceInputField.setAttribute('value', voiceInput);
+                        form.appendChild(voiceInputField);
+                        form.submit();
+                    };
+
+                    recognition.onerror = function(event) {
+                        console.error('Speech recognition error detected: ' + event.error);
+                    };
+
+                    recognition.start();
+                });
+            });
+        </script>
     <% end %>
 </div>
