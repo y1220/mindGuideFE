@@ -7,7 +7,6 @@ class GenerativeAiClient
   base_uri 'https://generativelanguage.googleapis.com/v1beta'
 
   def initialize(api_key = ENV['GOOGLE_API_KEY'])
-    puts "API Key: #{@api_key}"
     @api_key = api_key
     @headers = { 'Content-Type' => 'application/json' }
   end

@@ -1,4 +1,5 @@
 class ChatController < ApplicationController
+  skip_before_action :verify_authenticity_token, only: :chat
   def home
     @chat_response = "Click the button below to start chatting!"
     if params[:chat_response].present?
@@ -23,9 +24,17 @@ class ChatController < ApplicationController
       return
     end
 
-    file = File.read(file_path)
-    emoji_descriptions = JSON.parse(file)
-    description = emoji_descriptions[emotion]['description']
+    response = GenerativeAiClient.new.generate_content(voice + ", please answer concisely with a few sentences.")
+    content_text = nil
+    if response
+      content_text = response.dig("candidates", 0, "content", "parts", 0, "text")
+    else
+      content_text = "Failed to generate content"
+    end
+    description = content_text
+    # file = File.read(file_path)
+    # emoji_descriptions = JSON.parse(file)
+    # description = emoji_descriptions[emotion]['description']
 
     if description
       redirect_to action: 'home', chat_response: description, voice_input: voice
