@@ -3,7 +3,7 @@
     <p>Let's talk together, I am here to accompany your team discussion :)</p>
     <div style="height: 50px;"></div>
     <% emoji = JSON.parse(File.read(Rails.root.join('app', 'assets', 'config', 'animated_emoji.json'))) %>
-    <% emotion = emoji.keys.sample %>
+    <% emotion = @emotional_type || emoji.keys.sample %>
     <div id="emoji-animation" value="<%= emoji[emotion] %>" style="width: 200px; height: 200px; margin: 0 auto;"></div>
     <div style="height: 50px;"></div>
     <% if @voice.present? %>
