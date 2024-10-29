@@ -35,15 +35,15 @@ class ChatController < ApplicationController
 
     prompt = "Can you reply to message with Json object format,
        containing followings,
-       {\"response\": reply to my question, \"emotional_type\": emotion type name among
+       {\"response\": reply to my question or ask a question to continue our conversation, \"emotional_type\": emotion type name among
        #{valid_emotions} },
-       for the given sentence and please answer concisely with a few sentences and ask a question to continue our conversation: '#{voice}'"
+       for the given sentence and please answer concisely: '#{voice}'"
     response = GenerativeAiClient.new.generate_content(prompt)
     response_text = nil
     if response
       content_text = response.dig("candidates", 0, "content", "parts", 0, "text")
       puts content_text
-      if valid_json?(content_text)
+      if content_text && valid_json?(content_text)
         response_data = ActiveSupport::JSON.decode(content_text)
         response_text = response_data['response']
         emotional_type = response_data['emotional_type']
@@ -76,7 +76,8 @@ class ChatController < ApplicationController
     begin
       ActiveSupport::JSON.decode(json_string)
       true
-    rescue ActiveSupport::JSON.decode
+    rescue JSON::ParserError => e
+      puts "Failed to parse JSON: #{e.message}"
       false
     end
   end
