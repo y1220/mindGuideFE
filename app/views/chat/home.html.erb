@@ -1,4 +1,23 @@
 <div class="chat-container">
+    <div class="ui-customization">
+        <label for="ui-select">Choose UI:</label>
+        <select id="ui-select" name="ui_select" class="form-control" style="border-radius: 10px; padding: 10px; border: 1px solid #ccc; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);">
+            <option value="home">Home</option>
+            <option value="planet">Planet</option>
+        </select>
+        <button id="set-ui-button" class="btn btn-secondary" style="margin-top: 10px; background-color: #a3d5d3; color: #fff; border: none; border-radius: 5px; padding: 10px 20px; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);">Set UI</button>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const setUIButton = document.getElementById('set-ui-button');
+                const uiSelect = document.getElementById('ui-select');
+
+                setUIButton.addEventListener('click', function() {
+                    const selectedUI = uiSelect.value;
+                    window.location.href = `/chat/${selectedUI}`; // Directly navigate to the selected UI
+                });
+            });
+        </script>
+    </div>
     <h1>Talk to me!</h1>
     <p>Let's talk together, I am here to accompany your team discussion :)</p>
     <div style="height: 50px;"></div>
