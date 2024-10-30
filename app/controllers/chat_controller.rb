@@ -2,7 +2,21 @@ require 'active_support/json'
 
 class ChatController < ApplicationController
   skip_before_action :verify_authenticity_token, only: :chat
+
   def home
+    @chat_response = "Click the button below to start chatting!"
+    if params[:chat_response].present?
+      @chat_response = params[:chat_response]
+    end
+    if params[:voice_input].present?
+      @voice = params[:voice_input]
+    end
+    if params[:emotional_type].present?
+      @emotional_type = params[:emotional_type]
+    end
+  end
+
+  def planet
     @chat_response = "Click the button below to start chatting!"
     if params[:chat_response].present?
       @chat_response = params[:chat_response]
@@ -64,7 +78,7 @@ class ChatController < ApplicationController
     # description = emoji_descriptions[emotion]['description']
 
     if description
-      redirect_to action: 'home', chat_response: description, voice_input: voice, emotional_type: emotional_type
+      redirect_to action: 'planet', chat_response: description, voice_input: voice, emotional_type: emotional_type
     else
       render json: { error: 'Emotion label not found' }, status: :not_found
     end

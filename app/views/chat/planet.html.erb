@@ -1,0 +1,294 @@
+<div class="space-background" style="overflow: hidden; height: 100vh;">
+    <div class="chat-container">
+        <div class="ui-customization">
+            <label for="ui-select">Choose UI:</label>
+            <select id="ui-select" name="ui_select" class="form-control" style="border-radius: 10px; padding: 10px; border: 1px solid #ccc; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);">
+                <option value="home">Home</option>
+                <option value="planet">Planet</option>
+            </select>
+            <button id="set-ui-button" class="btn btn-secondary" style="margin-top: 10px; border-radius: 10px; padding: 10px; border: 1px solid #ccc; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);">Set UI</button>
+            <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    const setUIButton = document.getElementById('set-ui-button');
+                    const uiSelect = document.getElementById('ui-select');
+
+                    setUIButton.addEventListener('click', function() {
+                        const selectedUI = uiSelect.value;
+                        window.location.href = `/chat/${selectedUI}`; // Directly navigate to the selected UI
+                    });
+                });
+            </script>
+        </div>
+        <% emoji = JSON.parse(File.read(Rails.root.join('app', 'assets', 'config', 'animated_emoji.json'))) %>
+        <% emotion = @emotional_type || emoji.keys.sample %>
+        <svg width="40%" height="40%" viewBox="0 0 800 800" preserveAspectRatio="xMidYMid meet">
+            <!-- Background stars with twinkling -->
+            <g>
+                <circle cx="150" cy="150" r="1.5">
+                <animate attributeName="opacity" values="0.2;1;0.2" dur="3s" repeatCount="indefinite"/>
+                </circle>
+                <circle cx="300" cy="180" r="1">
+                <animate attributeName="opacity" values="0.2;1;0.2" dur="4s" repeatCount="indefinite"/>
+                </circle>
+                <circle cx="580" cy="160" r="1.5">
+                <animate attributeName="opacity" values="0.2;1;0.2" dur="3.5s" repeatCount="indefinite"/>
+                </circle>
+                <circle cx="620" cy="340" r="1">
+                <animate attributeName="opacity" values="0.2;1;0.2" dur="4.5s" repeatCount="indefinite"/>
+                </circle>
+                <circle cx="200" cy="500" r="1.5">
+                <animate attributeName="opacity" values="0.2;1;0.2" dur="3.2s" repeatCount="indefinite"/>
+                </circle>
+                <circle cx="670" cy="550" r="1">
+                <animate attributeName="opacity" values="0.2;1;0.2" dur="4.2s" repeatCount="indefinite"/>
+                </circle>
+            </g>
+
+            <!-- Main planet group - Centered -->
+            <g transform="translate(400,400)">
+                <!-- Planet rotation animation -->
+                <animateTransform
+                attributeName="transform"
+                type="rotate"
+                from="0 0 0"
+                to="360 0 0"
+                dur="20s"
+                repeatCount="indefinite"
+                additive="sum"
+                />
+
+                <!-- Planet ring -->
+                <ellipse
+                cx="0"
+                cy="0"
+                rx="160"
+                ry="40"
+                fill="none"
+                stroke="#dda0dd"
+                stroke-width="3"
+                transform="rotate(-15)">
+                <animate
+                    attributeName="stroke-opacity"
+                    values="0.5;0.8;0.5"
+                    dur="3s"
+                    repeatCount="indefinite"
+                />
+                </ellipse>
+
+                <!-- Main planet -->
+                <!-- Main planet with simulated horizontal rotation -->
+                <circle cx="0" cy="0" r="120" fill="#ffb6c1">
+                <animate
+                    attributeName="fill-opacity"
+                    values="0.8;1;0.8"
+                    dur="4s"
+                    repeatCount="indefinite"
+                />
+                <animateTransform
+                    attributeName="transform"
+                    type="scale"
+                    values="1,1; 0.7,1; 1,1"
+                    dur="4s"
+                    repeatCount="indefinite"
+                />
+                </circle>
+
+
+                <!-- Planet surface details -->
+                <g>
+                <animateTransform
+                    attributeName="transform"
+                    type="rotate"
+                    from="0 0 0"
+                    to="360 0 0"
+                    dur="10s"
+                    repeatCount="indefinite"
+                />
+                </g>
+
+                <!-- Planet population centers -->
+                <circle cx="-45" cy="30" r="12" fill="#fff" opacity="0.6">
+                <animate
+                    attributeName="opacity"
+                    values="0.4;0.8;0.4"
+                    dur="2s"
+                    repeatCount="indefinite"
+                />
+                </circle>
+                <circle cx="52" cy="-37" r="9" fill="#fff" opacity="0.6">
+                <animate
+                    attributeName="opacity"
+                    values="0.4;0.8;0.4"
+                    dur="3s"
+                    repeatCount="indefinite"
+                />
+                </circle>
+            </g>
+
+            <!-- Small floating planets -->
+            <g class="small-planet-1">
+                <circle cx="200" cy="200" r="25" fill="#b0e0e6">
+                <animate
+                    attributeName="opacity"
+                    values="0.7;1;0.7"
+                    dur="3s"
+                    repeatCount="indefinite"
+                />
+                </circle>
+                <circle cx="200" cy="200" r="6" fill="#fff" opacity="0.6"/>
+            </g>
+
+            <g class="small-planet-2">
+                <circle cx="600" cy="300" r="30" fill="#e0ffff">
+                <animate
+                    attributeName="opacity"
+                    values="0.7;1;0.7"
+                    dur="4s"
+                    repeatCount="indefinite"
+                />
+                </circle>
+                <circle cx="600" cy="300" r="7" fill="#fff" opacity="0.6"/>
+            </g>
+
+            <g class="small-planet-3">
+                <circle cx="300" cy="600" r="20" fill="#ffd6e0">
+                <animate
+                    attributeName="opacity"
+                    values="0.7;1;0.7"
+                    dur="3.5s"
+                    repeatCount="indefinite"
+                />
+                </circle>
+                <circle cx="300" cy="600" r="5" fill="#fff" opacity="0.6"/>
+            </g>
+
+            <g class="small-planet-4">
+                <circle cx="500" cy="500" r="15" fill="#d6e0ff">
+                <animate
+                    attributeName="opacity"
+                    values="0.7;1;0.7"
+                    dur="4.5s"
+                    repeatCount="indefinite"
+                />
+                </circle>
+                <circle cx="500" cy="500" r="4" fill="#fff" opacity="0.6"/>
+            </g>
+
+            <!-- Shooting stars -->
+            <g>
+                <path d="M620 180 L640 160" stroke="#fff" stroke-width="2">
+                <animate
+                    attributeName="opacity"
+                    values="0;1;0"
+                    dur="2s"
+                    repeatCount="indefinite"
+                />
+                </path>
+                <path d="M180 580 L200 560" stroke="#fff" stroke-width="2">
+                <animate
+                    attributeName="opacity"
+                    values="0;1;0"
+                    dur="3s"
+                    repeatCount="indefinite"
+                />
+                </path>
+            </g>
+        </svg>
+        <% if @voice.present? %>
+            <div class="chat-message-center">
+                <p><%= @chat_response %></p>
+            </div>
+        <% end %>
+        <div style="height: 20px;"></div>
+        <%= form_with url: chat_chat_url, method: :get, local: true do %>
+            <%= hidden_field_tag :emotion, emotion %>
+            <%= submit_tag 'Start Chatting', class: 'btn btn-primary start-chat-button' %>
+        <% end %>
+    </div>
+</div>
+
+<Script>
+     document.addEventListener('DOMContentLoaded', function() {
+        const startChatButton = document.querySelector('.start-chat-button');
+        startChatButton.addEventListener('click', function(event) {
+            event.preventDefault();
+            const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+            recognition.lang = 'en-US';
+            recognition.interimResults = false;
+            recognition.maxAlternatives = 1;
+
+            recognition.onresult = function(event) {
+                const voiceInput = event.results[0][0].transcript;
+                const form = startChatButton.closest('form');
+                const voiceInputField = document.createElement('input');
+                voiceInputField.setAttribute('type', 'hidden');
+                voiceInputField.setAttribute('name', 'voice_input');
+                voiceInputField.setAttribute('value', voiceInput);
+                form.appendChild(voiceInputField);
+                form.submit();
+            };
+
+            recognition.onerror = function(event) {
+                console.error('Speech recognition error detected: ' + event.error);
+            };
+
+            recognition.start();
+        });
+
+        // Load Lottie animation
+        const animationContainer = document.getElementById('emoji-animation');
+        const emojiCode = animationContainer.getAttribute('value');
+        const emojiPath = `https://fonts.gstatic.com/s/e/notoemoji/latest/${emojiCode}/lottie.json`;
+        lottie.loadAnimation({
+            container: animationContainer,
+            renderer: 'svg',
+            loop: true,
+            autoplay: true,
+            path: emojiPath
+        });
+
+        AnimatedSpaceScene.init(document.getElementById('animated-space-scene'));
+    });
+
+    // Check if the browser supports the SpeechSynthesis API
+    if ('speechSynthesis' in window) {
+        let text = sanitizeText("<%= @chat_response %>");
+        if(text !== "") {
+            text = sanitizeText(text);
+            const sentences = text.split('.');
+            if (sentences.length === 0 || (sentences.length === 1 && sentences[0].trim() === "")) {
+                const utterance = new SpeechSynthesisUtterance("Please repeat again as I could not hear you well");
+                utterance.lang = 'en-US';
+                utterance.pitch = 1;   // Range is 0 to 2, where 1 is the default
+                utterance.rate = 0.3;    // Range is 0.1 to 10, where 1 is the default
+                window.speechSynthesis.speak(utterance);
+            } else {
+                sentences.forEach(sentence => {
+                    const utterance = new SpeechSynthesisUtterance(sentence);
+                    utterance.lang = 'en-US';
+                    utterance.pitch = 1;
+                    utterance.rate = 0.5;
+                    window.speechSynthesis.speak(utterance);
+                    utterance.onend = function() {
+                        setTimeout(() => {}, 1000);
+                    };
+                });
+            }
+        }
+
+    } else {
+        console.log("Sorry, your browser does not support text-to-speech.");
+    }
+
+    function sanitizeText(text) {
+        return text
+                .replace(/\b(\w+)n't\b/gi, '$1 not')  // Replace common negative contractions
+                .replace(/\b(\w+)'ll\b/gi, '$1 will') // Replace contractions like I'll
+                .replace(/\b(\w+)'re\b/gi, '$1 are')  // Replace contractions like you're
+                .replace(/\b(\w+)'ve\b/gi, '$1 have') // Replace contractions like I've
+                .replace(/(\w)'(\w)/g, '$1 $2')       // Split other contractions like he'd -> he d
+                .replace(/[?!]/g, ' ')                // Replace question marks and exclamations with spaces
+                .replace(/_/g, ' ')                   // Replace underscores with spaces
+                .replace(/[^\w\s.,]/g, '');           // Remove all other special characters except ., and ,
+    }
+</script>
