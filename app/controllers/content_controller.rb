@@ -15,4 +15,12 @@ class ContentController < ApplicationController
   def show_content
     @content = "Once upon a time, there was a magic backpack that could fly."
   end
+
+  def custom_content
+    @id = params[:id]
+    @summary = ['summary1', 'summary2', 'summary3']
+    @point_of_view = ['point_of_view1', 'point_of_view2', 'point_of_view3']
+    @pick_up = ['pick_up_line1', 'pick_up_line2', 'pick_up_line3']
+    render :custom_content,  id: params[:id]
+  end
 end

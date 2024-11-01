@@ -6,4 +6,5 @@ Rails.application.routes.draw do
   get 'chat/chat', to: 'chat#chat'
   post 'generate_content', to: 'content#generate'
   get 'show_content', to: 'content#show_content'
+  get 'custom_content/:id', to: 'content#custom_content'
 end

@@ -1,7 +1,29 @@
 <div class="content-container">
+  <button id="robot-chat-button" class="robot-chat-button" style="background: none; border: none; cursor: pointer;">
+      <img src="<%= asset_path('icons/robot-chat.png') %>" alt="robot-chat" class="robot-chat-icon"
+      style="width: 50px; height: 50px;" title="Talk to chatbot again!">
+  </button>
+  <div style="display: flex; justify-content: space-between; gap: 10px;">
+    <button id="user1-button" class="user-button user1-button">
+      <img src="<%= asset_path('icons/planet.png') %>" alt="user1-icon" class="user1-icon" title="User 1">
+      User 1
+    </button>
+    <button id="user2-button" class="user-button user2-button">
+      <img src="<%= asset_path('icons/planet.png') %>" alt="user2-icon" class="user2-icon" title="User 2">
+      User 2
+    </button>
+    <button id="user3-button" class="user-button user3-button">
+      <img src="<%= asset_path('icons/planet.png') %>" alt="user3-icon" class="user3-icon" title="User 3">
+      User 3
+    </button>
+    <button id="user4-button" class="user-button user4-button">
+      <img src="<%= asset_path('icons/planet.png') %>" alt="user4-icon" class="user4-icon" title="User 4">
+      User 4
+    </button>
+  </div>
   <h1>Meditations for any mind, any mood, any goal</h1>
 
-  <div class="section">
+  <div class="pastel-rounded">
     <h2>Meditation benefits</h2>
     <ul>
       <li>What if I don't notice meditation benefits right away?</li>
@@ -14,7 +36,7 @@
     </ul>
   </div>
 
-  <div class="section">
+  <div class="pastel-rounded">
     <h2>How to meditate</h2>
     <ul>
       <li>How to meditate</li>
@@ -23,7 +45,7 @@
     </ul>
   </div>
 
-  <div class="section">
+  <div class="pastel-rounded">
     <h2>Guided meditations</h2>
     <ul>
       <li>From courses, single exercises, and bite-sized sessions, Headspace teachers provide guided meditations to help you navigate whatever life throws your way.</li>
@@ -35,3 +57,4 @@
     </ul>
   </div>
 </div>
+<%= render 'shared/content'  %>
