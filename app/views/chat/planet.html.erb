@@ -202,93 +202,9 @@
         <div style="height: 20px;"></div>
         <%= form_with url: chat_chat_url, method: :get, local: true do %>
             <%= hidden_field_tag :emotion, emotion %>
-            <%= submit_tag 'Start Chatting', class: 'btn btn-primary start-chat-button' %>
+            <%= submit_tag 'Start Chatting', id: 'start-chat', class: 'btn btn-primary start-chat-button' %>
         <% end %>
     </div>
 </div>
 
-<Script>
-     document.addEventListener('DOMContentLoaded', function() {
-        const startChatButton = document.querySelector('.start-chat-button');
-        startChatButton.addEventListener('click', function(event) {
-            event.preventDefault();
-            const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
-            recognition.lang = 'en-US';
-            recognition.interimResults = false;
-            recognition.maxAlternatives = 1;
-
-            recognition.onresult = function(event) {
-                const voiceInput = event.results[0][0].transcript;
-                const form = startChatButton.closest('form');
-                const voiceInputField = document.createElement('input');
-                voiceInputField.setAttribute('type', 'hidden');
-                voiceInputField.setAttribute('name', 'voice_input');
-                voiceInputField.setAttribute('value', voiceInput);
-                form.appendChild(voiceInputField);
-                form.submit();
-            };
-
-            recognition.onerror = function(event) {
-                console.error('Speech recognition error detected: ' + event.error);
-            };
-
-            recognition.start();
-        });
-
-        // Load Lottie animation
-        const animationContainer = document.getElementById('emoji-animation');
-        const emojiCode = animationContainer.getAttribute('value');
-        const emojiPath = `https://fonts.gstatic.com/s/e/notoemoji/latest/${emojiCode}/lottie.json`;
-        lottie.loadAnimation({
-            container: animationContainer,
-            renderer: 'svg',
-            loop: true,
-            autoplay: true,
-            path: emojiPath
-        });
-
-        AnimatedSpaceScene.init(document.getElementById('animated-space-scene'));
-    });
-
-    // Check if the browser supports the SpeechSynthesis API
-    if ('speechSynthesis' in window) {
-        let text = sanitizeText("<%= @chat_response %>");
-        if(text !== "") {
-            text = sanitizeText(text);
-            const sentences = text.split('.');
-            if (sentences.length === 0 || (sentences.length === 1 && sentences[0].trim() === "")) {
-                const utterance = new SpeechSynthesisUtterance("Please repeat again as I could not hear you well");
-                utterance.lang = 'en-US';
-                utterance.pitch = 1;   // Range is 0 to 2, where 1 is the default
-                utterance.rate = 0.3;    // Range is 0.1 to 10, where 1 is the default
-                window.speechSynthesis.speak(utterance);
-            } else {
-                sentences.forEach(sentence => {
-                    const utterance = new SpeechSynthesisUtterance(sentence);
-                    utterance.lang = 'en-US';
-                    utterance.pitch = 1;
-                    utterance.rate = 0.5;
-                    window.speechSynthesis.speak(utterance);
-                    utterance.onend = function() {
-                        setTimeout(() => {}, 1000);
-                    };
-                });
-            }
-        }
-
-    } else {
-        console.log("Sorry, your browser does not support text-to-speech.");
-    }
-
-    function sanitizeText(text) {
-        return text
-                .replace(/\b(\w+)n't\b/gi, '$1 not')  // Replace common negative contractions
-                .replace(/\b(\w+)'ll\b/gi, '$1 will') // Replace contractions like I'll
-                .replace(/\b(\w+)'re\b/gi, '$1 are')  // Replace contractions like you're
-                .replace(/\b(\w+)'ve\b/gi, '$1 have') // Replace contractions like I've
-                .replace(/(\w)'(\w)/g, '$1 $2')       // Split other contractions like he'd -> he d
-                .replace(/[?!]/g, ' ')                // Replace question marks and exclamations with spaces
-                .replace(/_/g, ' ')                   // Replace underscores with spaces
-                .replace(/[^\w\s.,]/g, '');           // Remove all other special characters except ., and ,
-    }
-</script>
+<%= render 'shared/voice_recognition' , custom_ui: 'planet'  %>

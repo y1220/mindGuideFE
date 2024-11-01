@@ -32,6 +32,7 @@ class ChatController < ApplicationController
   def chat
     emotion = params[:emotion]
     voice = params[:voice_input]
+    custom_ui = params[:custom_ui]
     unless emotion.present?
       render json: { error: 'Emotion label is required' }, status: :bad_request
       return
@@ -76,9 +77,9 @@ class ChatController < ApplicationController
     # file = File.read(file_path)
     # emoji_descriptions = JSON.parse(file)
     # description = emoji_descriptions[emotion]['description']
-
+    action = custom_ui.presence || 'home'
     if description
-      redirect_to action: 'planet', chat_response: description, voice_input: voice, emotional_type: emotional_type
+      redirect_to action: action, chat_response: description, voice_input: voice, emotional_type: emotional_type
     else
       render json: { error: 'Emotion label not found' }, status: :not_found
     end
