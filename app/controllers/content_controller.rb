@@ -11,4 +11,8 @@ class ContentController < ApplicationController
       render json: { error: "Failed to generate content" }, status: :unprocessable_entity
     end
   end
+
+  def show_content
+    @content = "Once upon a time, there was a magic backpack that could fly."
+  end
 end

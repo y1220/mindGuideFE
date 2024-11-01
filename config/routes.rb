@@ -5,4 +5,5 @@ Rails.application.routes.draw do
   get 'chat/planet', to: 'chat#planet'
   get 'chat/chat', to: 'chat#chat'
   post 'generate_content', to: 'content#generate'
+  get 'show_content', to: 'content#show_content'
 end
