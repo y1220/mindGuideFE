@@ -1,6 +1,7 @@
 require 'active_support/json'
 
 class ChatController < ApplicationController
+  include JsonHelper
   skip_before_action :verify_authenticity_token, only: :chat
 
   def home
@@ -57,7 +58,6 @@ class ChatController < ApplicationController
     response_text = nil
     if response
       content_text = response.dig("candidates", 0, "content", "parts", 0, "text")
-      puts content_text
       if content_text && valid_json?(content_text)
         response_data = ActiveSupport::JSON.decode(content_text)
         response_text = response_data['response']
@@ -82,18 +82,6 @@ class ChatController < ApplicationController
       redirect_to action: action, chat_response: description, voice_input: voice, emotional_type: emotional_type
     else
       render json: { error: 'Emotion label not found' }, status: :not_found
-    end
-  end
-
-  private
-
-  def valid_json?(json_string)
-    begin
-      ActiveSupport::JSON.decode(json_string)
-      true
-    rescue JSON::ParserError => e
-      puts "Failed to parse JSON: #{e.message}"
-      false
     end
   end
 end

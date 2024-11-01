@@ -1,4 +1,5 @@
 class ContentController < ApplicationController
+  include JsonHelper
   skip_before_action :verify_authenticity_token, only: :generate
 
   def generate
