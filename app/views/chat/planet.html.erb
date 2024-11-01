@@ -200,10 +200,27 @@
             </div>
         <% end %>
         <div style="height: 20px;"></div>
-        <%= form_with url: chat_chat_url, method: :get, local: true do %>
+        <div class="form-and-content-container" style="display: flex; align-items: center; justify-content: center;">
+            <%= form_with url: chat_chat_url, method: :get, local: true do %>
             <%= hidden_field_tag :emotion, emotion %>
-            <%= submit_tag 'Start Chatting', id: 'start-chat', class: 'btn btn-primary start-chat-button' %>
-        <% end %>
+            <%= submit_tag 'Start Chatting', id: 'start-chat', class: 'btn btn-primary start-chat-button', style: 'margin-right: 20px;' %>
+            <% end %>
+            <div class="content-icon-container" style="text-align: center; display: inline-block;">
+                <button id="content-button" class="content-button" style="background: none; border: none; cursor: pointer;">
+                    <img src="<%= asset_path('icons/content.png') %>" alt="Content" class="content-icon"
+                    style="width: 50px; height: 50px;" title="You can see summary of the conversation and customized suggestions for the topics you mention">
+                </button>
+                <script>
+                    document.addEventListener('DOMContentLoaded', function() {
+                        const contentButton = document.getElementById('content-button');
+
+                        contentButton.addEventListener('click', function() {
+                            window.location.href = '<%= show_content_path %>';
+                        });
+                    });
+                </script>
+            </div>
+        </div>
     </div>
 </div>
 
