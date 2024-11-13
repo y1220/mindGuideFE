@@ -14,6 +14,14 @@
     color: white;
 }
 
+.stop-chat-button {
+    background-color: lightskyblue;
+    border-radius: 12px;
+    padding: 10px 20px;
+    font-size: 18px;
+    text-decoration: none;
+    color: white;
+}
 .chat-message-left {
     text-align: left;
     background-color: #d3d3d3; /* Light gray */

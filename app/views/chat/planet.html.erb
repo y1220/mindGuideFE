@@ -29,7 +29,11 @@
         <div style="height: 20px;"></div>
         <div class="form-and-content-container" style="display: flex; align-items: center; justify-content: center;">
             <%= form_with url: chat_chat_url, method: :get, local: true do %>
-            <%= submit_tag 'Start Chatting', id: 'start-chat', class: 'btn btn-primary start-chat-button', style: 'margin-right: 20px;' %>
+                <%= button_tag(type: 'submit', id: 'start-chat', class: 'chat-button pulse', aria: { label: 'Start conversation' }) do %>
+                    <svg class="chat-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H6l-2 2V4h16v12z"/>
+                    </svg>
+                <% end %>
             <% end %>
             <div class="content-icon-container" style="text-align: center; display: inline-block;">
                 <button id="content-button" class="content-button" style="background: none; border: none; cursor: pointer;">
