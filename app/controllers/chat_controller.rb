@@ -34,26 +34,33 @@ class ChatController < ApplicationController
     emotion = params[:emotion]
     voice = params[:voice_input]
     custom_ui = params[:custom_ui]
-    unless emotion.present?
+    if !emotion.present?  && custom_ui == 'home'
       render json: { error: 'Emotion label is required' }, status: :bad_request
       return
     end
 
-    file_path = Rails.root.join('app', 'assets', 'config', 'animated_emoji_description.json')
-    unless File.exist?(file_path)
-      render json: { error: 'Configuration file not found' }, status: :internal_server_error
-      return
+    if custom_ui == 'home'
+      file_path = Rails.root.join('app', 'assets', 'config', 'animated_emoji_description.json')
+      unless File.exist?(file_path)
+        render json: { error: 'Configuration file not found' }, status: :internal_server_error
+        return
+      end
+      valid_emotions = ['smile', 'smile_with_big_eyes', 'grin', 'laughing', 'joy', 'star_struck',
+                'kissing_heart', 'kissing', 'kissing_smiling_eyes', 'partying_face', 'Pleading',
+                'thinking_face', 'zipper_mouth', 'screeming', 'rage', 'sweat', 'surprised',
+                'scrunched_mouth', 'mind_blown', 'cry', 'yawn']
+      prompt = "Can you reply to message with Json object format,
+              containing followings,
+              {\"response\": reply to my question or ask a question to continue our conversation, \"emotional_type\": emotion type name among
+              #{valid_emotions} },
+              for the given sentence and please answer concisely: '#{voice}'"
+    else
+      prompt = "Can you reply to message with Json object format,
+              containing followings,
+              {\"response\": reply to my question or ask a question to continue our conversation},
+              for the given sentence and please answer concisely: '#{voice}'"
     end
-    valid_emotions = ['smile', 'smile_with_big_eyes', 'grin', 'laughing', 'joy', 'star_struck',
-              'kissing_heart', 'kissing', 'kissing_smiling_eyes', 'partying_face', 'Pleading',
-              'thinking_face', 'zipper_mouth', 'screeming', 'rage', 'sweat', 'surprised',
-              'scrunched_mouth', 'mind_blown', 'cry', 'yawn']
 
-    prompt = "Can you reply to message with Json object format,
-       containing followings,
-       {\"response\": reply to my question or ask a question to continue our conversation, \"emotional_type\": emotion type name among
-       #{valid_emotions} },
-       for the given sentence and please answer concisely: '#{voice}'"
     response = GenerativeAiClient.new.generate_content(prompt)
     response_text = nil
     if response
@@ -61,8 +68,12 @@ class ChatController < ApplicationController
       if content_text && valid_json?(content_text)
         response_data = ActiveSupport::JSON.decode(content_text)
         response_text = response_data['response']
-        emotional_type = response_data['emotional_type']
-        unless valid_emotions.include?(emotional_type)
+        if custom_ui == 'home'
+          emotional_type = response_data['emotional_type']
+          unless valid_emotions.include?(emotional_type)
+            emotional_type = "zipper_mouth"
+          end
+        else
           emotional_type = "zipper_mouth"
         end
       else
